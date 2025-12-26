@@ -4,6 +4,7 @@ import { Pause, Play } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import LightRays from "./ui/light-rays";
 import TimeCard from "./ui/time-card";
+import Fireworks from "./ui/fireworks";
 const HomePage = () => {
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = React.useState(false);
@@ -57,20 +58,71 @@ const HomePage = () => {
   }, [currentYear, playing]);
 
   return (
-    <section>
-      <div style={{ width: "100%", height: "100%", position: "absolute" }}>
+    <section className="relative min-h-screen overflow-hidden">
+      {/* Animated gradient background */}
+      <motion.div
+        className="fixed inset-0"
+        style={{
+          background:
+            "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%)",
+          backgroundSize: "400% 400%",
+        }}
+        animate={{
+          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
+
+      {/* Overlay gradient for depth */}
+      <div
+        className="fixed inset-0"
+        style={{
+          background:
+            "radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.3) 100%)",
+        }}
+      />
+
+      {/* Animated mesh gradient */}
+      <motion.div
+        className="fixed inset-0 opacity-40"
+        style={{
+          background:
+            "radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 121, 198, 0.3), transparent 50%), radial-gradient(circle at 40% 20%, rgba(138, 35, 135, 0.3), transparent 50%)",
+        }}
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.4, 0.6, 0.4],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      <div
+        className="relative z-10"
+        style={{ width: "100%", height: "100%", position: "absolute" }}
+      >
         {currentYear === 2026 && (
-          <LightRays
-            raysOrigin="top-center"
-            raysColor="#00ffff"
-            raysSpeed={2}
-            lightSpread={10}
-            rayLength={1.8}
-            followMouse={true}
-            mouseInfluence={0.1}
-            noiseAmount={0.1}
-            distortion={0.05}
-          />
+          <>
+            <LightRays
+              raysOrigin="top-center"
+              raysColor="#00ffff"
+              raysSpeed={2}
+              lightSpread={10}
+              rayLength={1.8}
+              followMouse={true}
+              mouseInfluence={0.1}
+              noiseAmount={0.1}
+              distortion={0.05}
+            />
+            <Fireworks />
+          </>
         )}
       </div>
       <nav className="sticky top-0">
@@ -107,8 +159,8 @@ const HomePage = () => {
           </audio>
         </motion.div>
       </nav>
-      <main>
-        <div className="flex flex-col items-center justify-center min-h-screen px-4 text-center">
+      <main className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center px-4">
+        <div className="flex flex-col items-center justify-center px-4 text-center">
           <motion.h1
             className="text-8xl! sm:text-8xl! md:text-9xl! font-bold mb-4 drop-shadow-lg"
             initial={{ scale: 0, opacity: 0 }}
