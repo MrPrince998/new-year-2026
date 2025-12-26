@@ -160,7 +160,7 @@ const HomePage = () => {
         </motion.div>
       </nav>
       <main className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center px-4">
-        <div className="flex flex-col items-center justify-center px-4 text-center">
+        <div className="flex flex-col items-center justify-center px-4 text-center text-white">
           <motion.h1
             className="text-8xl! sm:text-8xl! md:text-9xl! font-bold mb-4 drop-shadow-lg"
             initial={{ scale: 0, opacity: 0 }}
@@ -179,41 +179,70 @@ const HomePage = () => {
               </motion.span>
             </AnimatePresence>
           </motion.h1>
-          <motion.div
-            className="grid grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 w-full max-w-md sm:max-w-2xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-          >
+
+          {currentYear === 2026 ? (
             <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
+              className="mt-6 sm:mt-8"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.8, ease: "backOut" }}
             >
-              <TimeCard date={DaysLeft} title={"Day"} />
+              <motion.h2
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white drop-shadow-2xl"
+                animate={{
+                  scale: [1, 1.05, 1],
+                  textShadow: [
+                    "0 0 20px rgba(255,255,255,0.5)",
+                    "0 0 40px rgba(255,255,255,0.8)",
+                    "0 0 20px rgba(255,255,255,0.5)",
+                  ],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                🎉 Happy New Year! 🎉
+              </motion.h2>
             </motion.div>
+          ) : (
             <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.7, duration: 0.6 }}
+              className="grid grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 w-full max-w-md sm:max-w-2xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
             >
-              <TimeCard date={HourLeft} title={"Hour"} />
+              <motion.div
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.6 }}
+              >
+                <TimeCard date={DaysLeft} title={"Day"} />
+              </motion.div>
+              <motion.div
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.7, duration: 0.6 }}
+              >
+                <TimeCard date={HourLeft} title={"Hour"} />
+              </motion.div>
+              <motion.div
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.6 }}
+              >
+                <TimeCard date={MinutesLeft} title={"Minute"} />
+              </motion.div>
+              <motion.div
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.9, duration: 0.6 }}
+              >
+                <TimeCard date={SecondLeft} title={"Second"} />
+              </motion.div>
             </motion.div>
-            <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.6 }}
-            >
-              <TimeCard date={MinutesLeft} title={"Minute"} />
-            </motion.div>
-            <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.9, duration: 0.6 }}
-            >
-              <TimeCard date={SecondLeft} title={"Second"} />
-            </motion.div>
-          </motion.div>
+          )}
         </div>
       </main>
     </section>
