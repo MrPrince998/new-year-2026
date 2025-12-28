@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import LightRays from "./ui/light-rays";
 import TimeCard from "./ui/time-card";
 import Fireworks from "./ui/fireworks";
+import FireworksParticles from "./ui/fireworks-particles";
 const HomePage = () => {
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = React.useState(false);
@@ -122,6 +123,7 @@ const HomePage = () => {
               distortion={0.05}
             />
             <Fireworks />
+            <FireworksParticles />
           </>
         )}
       </div>
@@ -159,53 +161,46 @@ const HomePage = () => {
           </audio>
         </motion.div>
       </nav>
-      <main className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center px-4">
+      <main className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center px-4 relative z-60">
         <div className="flex flex-col items-center justify-center px-4 text-center text-white">
-          <motion.h1
-            className="text-8xl! sm:text-8xl! md:text-9xl! font-bold mb-4 drop-shadow-lg"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, ease: "backOut" }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={currentYear}
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -20, opacity: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                {currentYear}
-              </motion.span>
-            </AnimatePresence>
-          </motion.h1>
-
           {currentYear === 2026 ? (
-            <motion.div
-              className="mt-6 sm:mt-8"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.8, ease: "backOut" }}
+            <motion.h1
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold drop-shadow-lg relative z-60"
+              initial={{ scale: 0, rotate: -180, opacity: 0 }}
+              animate={{
+                scale: [0, 1.2, 1],
+                rotate: [0, 10, -10, 0],
+                opacity: 1,
+                y: [0, -20, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                ease: "easeOut",
+                times: [0, 0.5, 1],
+              }}
+              style={{
+                textShadow:
+                  "0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,215,0,0.6), 0 0 60px rgba(255,105,180,0.4)",
+              }}
             >
-              <motion.h2
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white drop-shadow-2xl"
+              <motion.span
                 animate={{
-                  scale: [1, 1.05, 1],
-                  textShadow: [
-                    "0 0 20px rgba(255,255,255,0.5)",
-                    "0 0 40px rgba(255,255,255,0.8)",
-                    "0 0 20px rgba(255,255,255,0.5)",
+                  scale: [1, 1.1, 1],
+                  filter: [
+                    "hue-rotate(0deg)",
+                    "hue-rotate(360deg)",
+                    "hue-rotate(0deg)",
                   ],
                 }}
                 transition={{
-                  duration: 2,
+                  duration: 3,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
               >
                 🎉 Happy New Year! 🎉
-              </motion.h2>
-            </motion.div>
+              </motion.span>
+            </motion.h1>
           ) : (
             <motion.div
               className="grid grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 w-full max-w-md sm:max-w-2xl"
